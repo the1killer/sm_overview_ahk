@@ -10,9 +10,8 @@ v1.0.0
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 #Warn  ; Enable warnings to assist with detecting common errors.
 #SingleInstance, Force
-SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
-
+SetKeyDelay, 50, 50 ; Ensure all keys are held for 50ms, and there is a 50ms delay after sending each key
 #Include, drawbox.ahk
 
 quality:=2 ; lower is higher quality, but also slower because more images
@@ -103,27 +102,17 @@ return
             teleport(x,y)
             Sleep, 4000 ; Change this delay if your machine takes a while to load the tiles after teleporting
             teleport(x,y)
-            Send {Alt Down}
-            Sleep 50
-            Send Z
-            Sleep 50
-            Send {Alt Up}
+            Send !Z
             Sleep, 300
             takeScreenshot(ix,iy)
             Sleep, 500
-            Send {Alt Down}
-            Sleep 50
-            Send Z
-            Sleep 150
-            Send {Alt Up}
-            Sleep 50
-
+            Send !Z
             ; Sleep, 500
-            x := x + jump
-            ix := ix + 1
+            x += jump
+            ix++
         }
-        y := y + jump
-        iy := iy - 1
+        y += jump
+        iy--
     }
     Sleep, 500
 
@@ -132,20 +121,16 @@ return
 return
 
 teleport( x , y) {
+    global height
     WinGetPos, WinX, WinY, WinWidth, WinHeight, Scrap Mechanic
-    WinWidth := WinWidth * 0.0375
-    WinHeight := WinHeight * 0.9
+    WinWidth *= 0.0375
+    WinHeight *= 0.9
     PixelGetColor, color, %WinWidth%, %WinHeight%, RGB
     ; MsgBox The color at %WinWidth%,%WinHeight% is %color%
     if (color != 0xFFFFC0) {
         ; MsgBox, The color at %WinWidth%,%WinHeight% is %color%
-        Send {Alt Down}
-        Sleep 50
-        Send Z
-        Sleep 50
-        Send {Alt Up}
+        Send !Z
     }
-    global height
     Send, {Enter}
     Send, /tp %x%,%y%,%height%
     Send, {Enter}
