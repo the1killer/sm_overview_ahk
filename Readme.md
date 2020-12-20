@@ -1,5 +1,8 @@
 <img src="https://i.imgur.com/orwkU5q.png" style="max-width:75%">
 
+# Deprecated !!!
+This method for generating an overview map has been succeeded by my tile based overview map: https://github.com/the1killer/sm_overview
+
 # Example
 https://the1killer.github.io/scrapmechanicmap/
 
